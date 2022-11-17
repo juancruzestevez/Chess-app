@@ -13,6 +13,8 @@ public class LimitValidator implements MoveValidator{
 
     @Override
     public boolean validate(Point originPoint, Point pointMove, Board board) {
-        return (-limit <= pointMove.getX() - originPoint.getX() && pointMove.getX() - originPoint.getX() <= limit) || (-limit <= pointMove.getY() - originPoint.getY() && pointMove.getY() - originPoint.getY() <= limit);
+        int x = pointMove.getX() - originPoint.getX();
+        int y = pointMove.getY() - originPoint.getY();
+        return Math.abs(x) <= limit && Math.abs(y) <= limit;
     }
 }
