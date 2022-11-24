@@ -1,6 +1,6 @@
 package Objects;
 
-public class Point {
+public class Point implements Cloneable{
     private final int x;
     private final int y;
     private Piece piece;
@@ -29,5 +29,14 @@ public class Point {
 
     public boolean isEmpty(){
         return piece == null;
+    }
+
+    @Override
+    public Point clone() {
+        try {
+            return (Point) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

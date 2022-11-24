@@ -1,31 +1,35 @@
 package Objects;
 
-import GameMode.GameMode;
+import TurnsManager.TurnManager;
+import WinCondition.WinCondition;
+import builders.BoardBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-public class Game {
+public class Game implements Cloneable{
+    final BoardBuilder boardBuilder;
+    final WinCondition winCondition;
+    final TurnManager turnManager;
     private final Player player1;
     private final Player player2;
     private Player winner = null;
     private Board board;
-    private final GameMode gameMode;
-    private final Map<Integer, History> history;
-    private Player turn;
-    private final ArrayList<Piece> deadPieces;
 
-    public Game(Player player1, Player player2, GameMode gameMode) {
+    private Player turn;
+    private List<Piece> deadPieces;
+
+    public Game(BoardBuilder boardBuilder, WinCondition winCondition, TurnManager turnManager, Player player1, Player player2) {
+        this.boardBuilder = boardBuilder;
+        this.winCondition = winCondition;
+        this.turnManager = turnManager;
         this.player1 = player1;
         player1.setGame(this);
         this.player2 = player2;
         player2.setGame(this);
         turn = player1;
-        history = new HashMap<Integer,History>();
         deadPieces = new ArrayList<Piece>();
-        this.gameMode = gameMode;
-        board = gameMode.generateBoard();
+        board = boardBuilder.build();
     }
 
     public Player getPlayer1() {
@@ -44,19 +48,11 @@ public class Game {
         return board;
     }
 
-    public GameMode getGameMode() {
-        return gameMode;
-    }
-
-    public Map<Integer, History> getHistory() {
-        return history;
-    }
-
     public Player getTurn() {
         return turn;
     }
 
-    public ArrayList<Piece> getDeadPieces() {
+    public List<Piece> getDeadPieces() {
         return deadPieces;
     }
     public void setWinner(Player winner) {
@@ -79,19 +75,19 @@ public class Game {
         }
     }
 
-    public void check(Player player){
-        Point kingPoint = board.findPointByPiece(player.getColor(), TypePiece.KING);
-        for (int i = 0; i < board.getSquare().size(); i++) {
-            if (board.getSquare().get(i).getPiece() == null){
-                continue;
-            }else{
-                if (board.getSquare().get(i).getPiece().getColor() != player.getColor()){
-                    if (board.canMove(board.getSquare().get(i), kingPoint)){
-                        player.setCheck( true);
-                        gameMode.hasWon(player, board, this);
-                    }
-                }
-            }
+
+
+
+    public void setDeadPieces(List<Piece> deadPieces){
+        this.deadPieces = deadPieces;
+    }
+
+    @Override
+    public Game clone() {
+        try {
+            return (Game) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
         }
     }
 }

@@ -12,21 +12,13 @@ public class VerticalValidator implements MoveValidator{
     @Override
     public boolean validate(Point originPoint, Point pointMove, Board board) {
         if (originPoint.getX() == pointMove.getX()){
-            if (pointMove.getY() - originPoint.getY() > 0) {
-                for (int i = originPoint.getY() + 1; i < pointMove.getY(); i++) {
-                    if (board.indexOf(pointMove.getX(), i).getPiece() != null) {
-                        return false;
-                    }
+            int y =pointMove.getY() - originPoint.getY();
+            for (int i = 1; i < Math.abs(y); i++) {
+                if (board.indexOf(pointMove.getX(), originPoint.getY() + (i * (y/Math.abs(y)))).getPiece() != null){
+                    return false;
                 }
-                return true;
-            }else{
-                for (int i = originPoint.getY() - 1; i > pointMove.getY(); i--) {
-                    if (board.indexOf(pointMove.getX(), i).getPiece() != null) {
-                        return false;
-                    }
-                }
-                return true;
             }
+            return true;
         }
         return false;
     }

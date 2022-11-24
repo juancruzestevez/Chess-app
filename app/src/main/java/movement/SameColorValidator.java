@@ -12,7 +12,7 @@ public class SameColorValidator implements MoveValidator{
         if (pointMove.getPiece() == null){
             return true;
         }else{
-            return !originPoint.getPiece().getColor().equals(pointMove.getPiece().getColor());
+            return !(originPoint.getPiece().getColor() == pointMove.getPiece().getColor());
         }
     }
 }

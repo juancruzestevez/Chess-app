@@ -21,17 +21,17 @@ public class pawnValidator implements MoveValidator{
 
     @Override
     public boolean validate(Point originPoint, Point pointMove, Board board) {
-        if (fowardv.validate(originPoint, pointMove, board)){
-            if (pointMove.getPiece() != null){
+        if(fowardv.validate(originPoint, pointMove, board)){
+            if(pointMove.getPiece() != null){
                 return diagonalv.validate(originPoint, pointMove, board) && limitv1.validate(originPoint, pointMove, board);
-            }else {
+            }else{
                 if (!originPoint.getPiece().getMoved()){
                     return verticalv.validate(originPoint, pointMove, board) && limitv2.validate(originPoint, pointMove, board);
-                }else {
+                }else{
                     return verticalv.validate(originPoint, pointMove, board) && limitv1.validate(originPoint, pointMove, board);
                 }
             }
-        }else {
+        }else{
             return false;
         }
     }

@@ -6,6 +6,7 @@ import Objects.Point;
 public class DiagonalValidator implements MoveValidator{
 
     public DiagonalValidator() {
+
     }
 
     @Override
@@ -14,12 +15,12 @@ public class DiagonalValidator implements MoveValidator{
         int y = pointMove.getY() - originPoint.getY();
         if (Math.abs(x) == Math.abs(y)){
             for (int i = 1; i < Math.abs(x); i++) {
-                if (board.indexOf(originPoint.getX() + (i * (x/Math.abs(x)) ), originPoint.getY() + (i * (y/Math.abs(y)))) != null){
+                if (board.indexOf((originPoint.getX() + (i * (x/Math.abs(x)))), (originPoint.getY() + (i * (y/Math.abs(y))))).getPiece() != null){
                     return false;
                 }
             }
             return true;
-        }else {
+        }else{
             return false;
         }
     }
